@@ -5,8 +5,7 @@
             "App\\": "app/"
         },
         "files": [
-            "app/bootstrap.php",
-            "app/Config/constants.php"
+            "app/bootstrap.php"
         ]
     },
     "require": {}
