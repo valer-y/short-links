@@ -4,5 +4,5 @@ namespace App\Contracts;
 
 interface CPT_Interface
 {
-    public static function register_cpt();
+    public function register_post_type();
 }

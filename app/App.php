@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\CPT\CPT_Short_Links;
 use App\Services\EnqueueScriptsService;
 use App\Services\GetCurrentUrlService;
 
@@ -22,9 +23,24 @@ class App extends Singleton
         /** enqueue styles and scripts */
         (new EnqueueScriptsService($version))->add_styles_scripts();
 
+        /** register CPT 'short-links' */
+        (new CPT_Short_Links());
+
         $this->get_page_url();
 
         return $this;
+    }
+
+
+    public static function short_links_pt()
+    {
+        register_post_type('short-links',
+            array(
+                'public' => false,
+                'has_archive' => false,
+                'label' => 'Short Link',
+                'supports' => ['title']
+            ));
     }
 
     public function get_page_url() : void
