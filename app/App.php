@@ -2,24 +2,41 @@
 
 namespace App;
 
+use App\Services\EnqueueScriptsService;
+use App\Services\GetCurrentUrlService;
+
+
 class App extends Singleton
 {
-    protected function __construct()
-    {
-        parent::__construct();
-    }
+    protected string $current_url = '';
 
     /**
      * initialize plugin's scripts and styles
+     * @uses \App\Services\EnqueueScriptsService
      */
-    public function init() : Singleton
+
+    public function init($version = '0.1.0') : Singleton
     {
-        $instance = self::get_instance();
-
         register_activation_hook(SHORTLINKS_ETRYPOINT, array($this, 'flush_rewrite_rules'));
-        $this->add_styles_scripts();
 
-        return $instance;
+        /** enqueue styles and scripts */
+        (new EnqueueScriptsService($version))->add_styles_scripts();
+
+        $this->get_page_url();
+
+        return $this;
+    }
+
+    public function get_page_url() : void
+    {
+        /**
+         * get current page url and store it
+         * @uses $current_url, \App\Services\GetCurrentUrlService
+         */
+
+        add_action('template_redirect', function () {
+            $this->current_url = (new GetCurrentUrlService())->get_url();
+        });
     }
 
     public function flush_rewrite_rules() : void {
@@ -27,24 +44,4 @@ class App extends Singleton
         $wp_rewrite->flush_rules( true );
     }
 
-    public function add_styles_scripts() : void
-    {
-        add_action( 'admin_enqueue_scripts', array( $this, 'plugin_style_scripts') );
-    }
-
-    public function plugin_style_scripts () : void
-    {
-        $this->admin_style_scripts();
-        $this->front_style_scripts();
-    }
-
-    public function admin_style_scripts() : void
-    {
-        wp_enqueue_style('shortlinks_admin_style', SHORTLINKS_ASSETS_URL . "/admin/css/style.css", [], '1.0');
-    }
-
-    public function front_style_scripts() : void
-    {
-        /** TODO: add front styles and scripts if needed **/
-    }
 }

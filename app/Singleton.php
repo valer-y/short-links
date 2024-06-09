@@ -2,11 +2,11 @@
 
 namespace App;
 
-abstract class Singleton
-{
+abstract class Singleton {
+
     private static array $instances = [];
 
-    protected function __construct() {
+    private function __construct() {
     }
 
     public static function get_instance(): Singleton {
