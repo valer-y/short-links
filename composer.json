@@ -1,0 +1,13 @@
+{
+    "name": "valery/short-links",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        },
+        "files": [
+            "app/bootstrap.php",
+            "app/Config/constants.php"
+        ]
+    },
+    "require": {}
+}
