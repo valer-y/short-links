@@ -5,6 +5,7 @@ namespace App;
 use App\CPT\CPT_Short_Links;
 use App\Services\EnqueueScriptsService;
 use App\Services\GetCurrentUrlService;
+use App\Services\Metaboxes\Short_Links_Metabox;
 
 
 class App extends Singleton
@@ -25,6 +26,8 @@ class App extends Singleton
 
         /** register CPT 'short-links' */
         (new CPT_Short_Links());
+
+        (new Short_Links_Metabox()) ;
 
         $this->get_page_url();
 
