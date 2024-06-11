@@ -4,13 +4,14 @@ namespace App;
 
 use App\CPT\CPT_Short_Links;
 use App\Services\Columns\Short_Links_Admin_Custom_Columns;
-use App\Services\Enqueue_Scripts_Service;
-use App\Services\Get_Current_Url_Service;
-use App\Services\Metaboxes\Short_Links_Meta;
-use App\Services\Metaboxes\Short_Links_Metabox;
-use App\Services\Redirect_By_Short_Link_Service;
-use App\Services\Set_Session_Service;
-
+use App\Services\{
+    Enqueue_Scripts_Service,
+    Get_Current_Url_Service,
+    Redirect_By_Short_Link_Service,
+    Set_Session_Service};
+use App\Services\Metaboxes\{
+    Short_Links_Meta,
+    Short_Links_Metabox};
 
 class App extends Singleton
 {
