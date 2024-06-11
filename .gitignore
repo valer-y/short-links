@@ -16,9 +16,6 @@
 /wp-*.php
 /xmlrpc.php
 
-# Folders
-vendor/
-
 # Configuration
 composer.lock
 wp-config.php
@@ -50,4 +47,4 @@ wp-config.php
 # uncomment the next line
 #/wp-content/themes
 
-/vendor/
+#/vendor/
