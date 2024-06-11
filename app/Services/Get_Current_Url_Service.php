@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-class GetCurrentUrlService
+class Get_Current_Url_Service
 {
     protected string $current_url = '';
 

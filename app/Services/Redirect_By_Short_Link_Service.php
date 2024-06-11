@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-class RedirectByShortLinkService
+class Redirect_By_Short_Link_Service
 {
     // check short-links url from CPT and redirects if matches with actual URL
     public function __invoke( string $current_url = '') : void
