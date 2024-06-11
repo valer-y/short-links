@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-class EnqueueScriptsService
+class Enqueue_Scripts_Service
 {
     protected string $version = '';
 

@@ -4,11 +4,11 @@ namespace App;
 
 use App\CPT\CPT_Short_Links;
 use App\Services\Columns\Short_Links_Admin_Custom_Columns;
-use App\Services\EnqueueScriptsService;
-use App\Services\GetCurrentUrlService;
+use App\Services\Enqueue_Scripts_Service;
+use App\Services\Get_Current_Url_Service;
 use App\Services\Metaboxes\Short_Links_Meta;
 use App\Services\Metaboxes\Short_Links_Metabox;
-use App\Services\RedirectByShortLinkService;
+use App\Services\Redirect_By_Short_Link_Service;
 use App\Services\Set_Session_Service;
 
 
@@ -18,14 +18,14 @@ class App extends Singleton
 
     /**
      * initialize plugin's scripts and styles
-     * @uses \App\Services\EnqueueScriptsService
+     * @uses \App\Services\Enqueue_Scripts_Service
      */
     public function init($version = '0.1.0') : Singleton
     {
         register_activation_hook(SHORTLINKS_ETRYPOINT, array($this, 'flush_rewrite_rules'));
 
         //enqueue styles and scripts
-        (new EnqueueScriptsService($version))->add_styles_scripts();
+        (new Enqueue_Scripts_Service($version))->add_styles_scripts();
 
         // register CPT 'short-links'
         (new CPT_Short_Links());
@@ -52,13 +52,13 @@ class App extends Singleton
     {
         /**
          * get current page url and redirect with RedirectByShortLinkService class
-         * @uses $current_url, \App\Services\GetCurrentUrlService, \App\Services\RedirectByShortLinkService
+         * @uses $current_url, \App\Services\Get_Current_Url_Service, \App\Services\Redirect_By_Short_Link_Service
          */
 
         add_action('template_redirect', function () {
-            $this->current_url = (new GetCurrentUrlService())->get_url();
+            $this->current_url = (new Get_Current_Url_Service())->get_url();
 
-            $redirect = new RedirectByShortLinkService();
+            $redirect = new Redirect_By_Short_Link_Service();
             $redirect($this->current_url);
 
         });
