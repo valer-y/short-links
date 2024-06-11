@@ -21,6 +21,7 @@ class Short_Links_Admin_Custom_Columns
         $columns['page_url'] = esc_html__('Page URL', 'short-links');
         $columns['full_link'] = esc_html__('Full Link', 'short-links');
         $columns['clicks'] = esc_html__('Clicks', 'short-links');
+        $columns['filtered_clicks'] = esc_html__('Filtered Clicks', 'short-links');
         $columns['date'] = $date;
 
 
@@ -32,6 +33,7 @@ class Short_Links_Admin_Custom_Columns
         $page_url = get_the_permalink($post_id);
         $full_link = get_post_meta($post_id, 'short_link_url', true);
         $clicks = get_post_meta($post_id, 'openings', true);
+        $filtered_clicks = 1;
 
         switch ($column) {
             case 'page_url':
@@ -43,6 +45,8 @@ class Short_Links_Admin_Custom_Columns
             case 'clicks':
                 esc_html_e($clicks);
                 break;
+            case 'filtered_clicks':
+                esc_html_e($filtered_clicks);
             default:
                 break;
         }
@@ -53,6 +57,7 @@ class Short_Links_Admin_Custom_Columns
         $columns['page_url'] = 'page_url';
         $columns['full_link'] = 'full_link';
         $columns['clicks'] = 'clicks';
+        $columns['filtered_clicks'] = 'filtered_clicks';
 
         return $columns;
     }

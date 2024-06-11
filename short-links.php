@@ -18,6 +18,7 @@ defined('SHORTLINKS_ROOT_ABS') || define('SHORTLINKS_ROOT_ABS', dirname(__DIR__,
 defined('SHORTLINKS_ETRYPOINT') || define('SHORTLINKS_ETRYPOINT', SHORTLINKS_ROOT_ABS . '/short-links.php');
 defined('SHORTLINKS_ROOT_URL') || define('SHORTLINKS_ROOT_URL', plugin_dir_url(__FILE__));
 defined('SHORTLINKS_ASSETS_URL') || define('SHORTLINKS_ASSETS_URL', SHORTLINKS_ROOT_URL . '/assets');
+defined('DOUBLE_CLICK_TIME') || define('DOUBLE_CLICK_TIME', 2 * MINUTE_IN_SECONDS);
 
 require_once "vendor/autoload.php";
 

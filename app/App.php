@@ -39,7 +39,23 @@ class App extends Singleton
 
         $this->if_make_redirect();
 
+        add_action( 'init', [$this, 'init_session'] );
+
         return $this;
+    }
+
+
+    public function init_session() {
+
+            session_start();
+//        session_destroy();
+
+//        var_dump($_SESSION);
+//        die();
+//        $_SESSION['test'] = 'test';
+//
+//        var_dump($_SESSION);
+//        die();
     }
 
     public function my_add_meta_on_short_links_creation($post_id, $post, $update) {

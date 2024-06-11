@@ -24,7 +24,21 @@ class RedirectByShortLinkService
                 if($this->filter_link(get_the_permalink()) === $this->filter_link($current_url)) {
 
                     $post_id = get_the_ID();
-                    $redirection_url = get_post_meta($post_id)['short_link_url'][0] ?? '/';
+                    $redirection_url = get_post_meta($post_id)['short_link_url'][0];
+
+                    if(array_key_exists($current_url, $_SESSION)) {
+
+                        $double_click_time_gap = time() - $_SESSION[$current_url];
+                        if($double_click_time_gap > DOUBLE_CLICK_TIME ) {
+                            var_dump($double_click_time_gap);
+                            die(); //##
+                        }
+
+                    }
+                    $_SESSION[$current_url] = time();
+//
+//                    var_dump($_SESSION);
+//                    die();
 
                     $openings_initial_value = get_post_meta($post_id, 'openings', true);
                     update_post_meta($post_id, 'openings', ++$openings_initial_value);
