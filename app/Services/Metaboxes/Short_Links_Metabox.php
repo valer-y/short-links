@@ -7,7 +7,6 @@ class Short_Links_Metabox
     public function __construct()
     {
         add_action('add_meta_boxes', [$this, 'add_short_link_metabox']);
-//        add_action('add_meta_boxes', [$this, 'add_page_openings_metabox']);
         add_action('save_post', [$this, 'save_metabox'], 10, 2);
     }
 
@@ -55,7 +54,7 @@ class Short_Links_Metabox
 
         echo <<<HTML
             <label for="short_link_url"><?php //_e('Short Link URL:', 'short-links'); ?></label>
-            <input type="url" id="short_link_url" name="short_link_url" value="{$link}" style="width: 100%;" />
+            <input type="url" id="short_link_url" name="short_link_url" value="{$link}" style="width: 100%;" required />
         HTML;
     }
 

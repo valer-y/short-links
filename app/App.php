@@ -8,6 +8,7 @@ use App\Services\EnqueueScriptsService;
 use App\Services\GetCurrentUrlService;
 use App\Services\Metaboxes\Short_Links_Metabox;
 use App\Services\RedirectByShortLinkService;
+use App\Services\Set_Session_Service;
 
 
 class App extends Singleton
@@ -35,45 +36,37 @@ class App extends Singleton
         // add custom columns fot CPT 'short-links' admin
         (new Short_Links_Admin_Custom_Columns());
 
-        add_action('save_post', [$this, 'my_add_meta_on_short_links_creation'], 10, 3);
+        add_action('save_post', [$this, 'add_meta_on_short_links_creation'], 10, 3);
+
+        // create or destroy $_SESSION
+        add_action( 'init', [Set_Session_Service::class, 'session'] );
 
         $this->if_make_redirect();
-
-        add_action( 'init', [$this, 'init_session'] );
 
         return $this;
     }
 
 
-    public function init_session() {
-
-            session_start();
-//        session_destroy();
-
-//        var_dump($_SESSION);
-//        die();
-//        $_SESSION['test'] = 'test';
+//    public function add_meta_on_short_links_creation($post_id, $post, $update) {
+//        // Only add meta if it's a new post
+//        if ($update) {
+//            return;
+//        }
 //
-//        var_dump($_SESSION);
-//        die();
-    }
-
-    public function my_add_meta_on_short_links_creation($post_id, $post, $update) {
-        // Only add meta if it's a new post
-        if ($update) {
-            return;
-        }
-
-        // Check the post type to ensure it's the correct CPT
-        if ($post->post_type !== 'short-links') {
-            return;
-        }
-
-        // Check if the meta key already exists and add if it does not
-        if (!add_post_meta($post_id, 'openings', '0', true)) {
-            add_post_meta($post_id, 'openings', '0', true);
-        }
-    }
+//        // Check the post type to ensure it's the correct CPT
+//        if ($post->post_type !== 'short-links') {
+//            return;
+//        }
+//
+//        // Check if the meta key already exists and add if it does not
+//        if (!add_post_meta($post_id, 'openings', '0', true)) {
+//            add_post_meta($post_id, 'openings', '0', true);
+//        }
+//
+//        if (!add_post_meta($post_id, 'filtered_openings', '0', true)) {
+//            add_post_meta($post_id, 'filtered_openings', '0', true);
+//        }
+//    }
 
     public function if_make_redirect() : void
     {

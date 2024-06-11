@@ -33,7 +33,7 @@ class Short_Links_Admin_Custom_Columns
         $page_url = get_the_permalink($post_id);
         $full_link = get_post_meta($post_id, 'short_link_url', true);
         $clicks = get_post_meta($post_id, 'openings', true);
-        $filtered_clicks = 1;
+        $filtered_clicks = get_post_meta($post_id, 'filtered_openings', true);;
 
         switch ($column) {
             case 'page_url':
