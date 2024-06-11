@@ -7,6 +7,7 @@ class Short_Links_Metabox
     public function __construct()
     {
         add_action('add_meta_boxes', [$this, 'add_short_link_metabox']);
+//        add_action('add_meta_boxes', [$this, 'add_page_openings_metabox']);
         add_action('save_post', [$this, 'save_metabox'], 10, 2);
     }
 
