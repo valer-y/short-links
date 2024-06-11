@@ -6,8 +6,10 @@ use App\CPT\CPT_Short_Links;
 use App\Services\Columns\Short_Links_Admin_Custom_Columns;
 use App\Services\EnqueueScriptsService;
 use App\Services\GetCurrentUrlService;
+use App\Services\Metaboxes\Short_Links_Meta;
 use App\Services\Metaboxes\Short_Links_Metabox;
 use App\Services\RedirectByShortLinkService;
+use App\Services\Set_Session_Service;
 
 
 class App extends Singleton
@@ -18,7 +20,6 @@ class App extends Singleton
      * initialize plugin's scripts and styles
      * @uses \App\Services\EnqueueScriptsService
      */
-
     public function init($version = '0.1.0') : Singleton
     {
         register_activation_hook(SHORTLINKS_ETRYPOINT, array($this, 'flush_rewrite_rules'));
@@ -32,32 +33,20 @@ class App extends Singleton
         // create metabox for CPT 'short-links'
         (new Short_Links_Metabox()) ;
 
-        // add custom columns fot CPT 'short-links' admin
+        // add custom columns for CPT 'short-links' admin
         (new Short_Links_Admin_Custom_Columns());
 
-        add_action('save_post', [$this, 'my_add_meta_on_short_links_creation'], 10, 3);
+        // add meta-fields CPT 'short-links'
+        add_action('save_post', [Short_Links_Meta::class, 'add_meta_on_short_links_creation'], 10, 3);
+
+        // create or destroy $_SESSION
+        add_action( 'init', [Set_Session_Service::class, 'session'] );
 
         $this->if_make_redirect();
 
         return $this;
     }
 
-    public function my_add_meta_on_short_links_creation($post_id, $post, $update) {
-        // Only add meta if it's a new post
-        if ($update) {
-            return;
-        }
-
-        // Check the post type to ensure it's the correct CPT
-        if ($post->post_type !== 'short-links') {
-            return;
-        }
-
-        // Check if the meta key already exists and add if it does not
-        if (!add_post_meta($post_id, 'openings', '0', true)) {
-            add_post_meta($post_id, 'openings', '0', true);
-        }
-    }
 
     public function if_make_redirect() : void
     {
